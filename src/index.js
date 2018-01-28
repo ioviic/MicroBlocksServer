@@ -3,10 +3,12 @@ import path from "path";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import auth from "./routes/auth";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 app.use(bodyParser.json());
-mongoose.connect("mongodb://127.0.0.1:27017/microBlocks");
+mongoose.connect(process.env.MONGODB_URL);
 
 app.use("/api/auth", auth);
 
