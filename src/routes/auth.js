@@ -13,8 +13,8 @@ router.post("/", (req, res) => {
         res.status(400).json({ errors: { global: "Invalid Credentials" } });
       }
     })
-    .catch(err => {
-      console.log(err);
+    .catch(() => {
+      // TODO Add here logic for exception reading from database
     });
 });
 
