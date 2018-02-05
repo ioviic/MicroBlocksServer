@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User";
+import parseError from "../utils/parseError";
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.post("/", (req, res) => {
   user
     .save()
     .then(userRecord => res.json({ user: userRecord.toAuthJSON() }))
-    .catch(error => res.status(400).json({ errors: error.erros }));
+    .catch(error => res.status(400).json({ errors: parseError(error.errors) }));
 });
 
 export default router;

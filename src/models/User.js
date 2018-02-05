@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import uniqueValidator from "mongoose-unique-validator";
 
-// TODO add uniqueness and validation for the email
 const schema = new mongoose.Schema(
   {
-    email: { type: String, required: true, lowercase: true, index: true },
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      index: true,
+      unique: true
+    },
     passwordHash: { type: String, required: true }
   },
   { timestamps: true }
@@ -29,5 +35,7 @@ schema.methods.toAuthJSON = function toAuthJSON() {
     token: this.generateJWT()
   };
 };
+
+schema.plugin(uniqueValidator, { message: "This {PATH} already taken!" });
 
 export default mongoose.model("User", schema);
